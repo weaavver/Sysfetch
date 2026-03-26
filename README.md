@@ -1,7 +1,8 @@
-Block 1 Sys-fetch
+Sys-fetch GOALS:
+
 Processor
-- Model
-- Cores
+- Model /finished
+- Cores /finished
 - Architecture
 Memory
 - Total/Used 
@@ -21,7 +22,7 @@ OS info
 - OS name
 - OS version
 - System Uptime
-- Ipv4, Ipv6, Mac address
+- Ipv4, Ipv6, Mac address 
 - Package Manager +
 - Installed Packages +
 
@@ -33,10 +34,10 @@ Task Manager
 - GPU usage
 
 Utilities
-- File browser (Terminal type or GUI)
+- File browser (Terminal type or GUI) /finished
 - Make bootable drive (w/ dd) warning included
 - Disk Reformat/ Disk Partition warning included
-- Dir and File searches (grep type shit)
+- Dir and File searches (grep type shit) 
 - Drive Defragmentation or Clean up utility
 
 Music Player +
