@@ -29,9 +29,9 @@ Storage Devices
 - Available /finished
 - Type (format, ext/btrfs/fat32/etc) /finished 
 OS info
-- OS name
-- OS version
-- System Uptime
+- OS name /finished
+- OS version /finished
+- System Uptime /finished
 - Ipv4, Ipv6, Mac address 
 - Package Manager +
 - Installed Packages +
