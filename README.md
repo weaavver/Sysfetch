@@ -15,19 +15,19 @@ Processor
 - Cores /finished
 - Architecture
 Memory
-- Total/Used 
-- Available
+- Total/Used /finished
+- Available /finished
 - Speed
-- Swap
+- Swap /finished
 Mobo Info
-- Manufacturer
-- Model
+- Manufacturer /finished
+- Model /finished
 Storage Devices
-- Disks
-- Partitions
-- Total/Used
-- Available 
-- Type
+- Disks /finished
+- Partitions /finished
+- Total/Used /finished
+- Available /finished
+- Type (format, ext/btrfs/fat32/etc) /finished 
 OS info
 - OS name
 - OS version
@@ -37,7 +37,7 @@ OS info
 - Installed Packages +
 
 Task Manager
-- Process ID
+- Process ID /finished
 - Ability to kill process +
 - CPU usage
 - Memory usage
