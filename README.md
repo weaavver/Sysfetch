@@ -1,3 +1,6 @@
+YOU NEED TO USE sudo visudo username ALL=(ALL) NOPASSWD: ALL
+or atleast whitelist the app on sudos because without it major functionalities won't work.
+
 Sys-fetch GOALS:
 
 Processor
