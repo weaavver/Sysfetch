@@ -32,9 +32,8 @@ OS info
 - OS name /finished
 - OS version /finished
 - System Uptime /finished
-- Ipv4, Ipv6, Mac address 
-- Package Manager +
-- Installed Packages +
+- Ipv4, Ipv6, Mac address /finished
+- Installed Packages + /thinking of just adding this to the Emulated Terminal
 
 Task Manager
 - Process ID /finished
@@ -51,4 +50,4 @@ Utilities
 - Drive Defragmentation or Clean up utility
 
 Music Player +
-- Can add music, need file path, can add music cover with ffmpeg
+- Can add music, need file path, can add music cover with ffmpeg /cancelled pain in the ass
