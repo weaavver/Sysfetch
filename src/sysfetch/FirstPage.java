@@ -97,6 +97,55 @@ public class FirstPage extends javax.swing.JFrame {
     
     }
     
+    private void runCleanup() {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                "pkexec",
+                "sh",
+                "-c",
+                "journalctl --vacuum-time=3d && apt clean && apt autoremove -y && rm -rf ~/.cache/*"
+            );
+
+            pb.redirectErrorStream(true);
+
+            Process process = pb.start();
+
+            BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream())
+            );
+
+            StringBuilder output = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            int exitCode = process.waitFor();
+
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                if (exitCode == 0) {
+                    javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "✅ Cleanup completed successfully!\n\nDetails:\n" + output.toString(),
+                        "Cleanup Complete",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE
+                    );
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(
+                        this,
+                        "❌ Cleanup failed.\n\nDetails:\n" + output.toString(),
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void createBootableDrive() {
     String drive = txtDrive.getText().trim();      //gets the drive and remove spaces
     String iso   = txtPATHtoISO.getText().trim();  //gets path to iso and remove spaces
@@ -503,6 +552,7 @@ public class FirstPage extends javax.swing.JFrame {
         txtPATHtoISO = new javax.swing.JTextField();
         btnConfirmDD = new javax.swing.JButton();
         jLabel33 = new javax.swing.JLabel();
+        btnCleanUp = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -676,6 +726,9 @@ public class FirstPage extends javax.swing.JFrame {
         jLabel33.setForeground(new java.awt.Color(255, 0, 0));
         jLabel33.setText("WARNING: THIS CAN DELETE YOUR WHOLE OS. BECAREFUL");
 
+        btnCleanUp.setLabel("Clean up");
+        btnCleanUp.addActionListener(this::btnCleanUpActionPerformed);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -715,10 +768,8 @@ public class FirstPage extends javax.swing.JFrame {
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel7Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabel7))
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtCpuModel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtCores, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -789,12 +840,10 @@ public class FirstPage extends javax.swing.JFrame {
                                                             .addGap(18, 18, 18)
                                                             .addComponent(txtOSVersion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(0, 26, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addComponent(jLabel30)
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel32)
@@ -805,8 +854,13 @@ public class FirstPage extends javax.swing.JFrame {
                                     .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(txtPATHtoISO, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                                         .addComponent(txtDrive))))
+                            .addComponent(jLabel30)
                             .addComponent(jLabel33))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCleanUp))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -878,17 +932,20 @@ public class FirstPage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCleanUp))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel27)
                             .addComponent(txtMoboManufacturer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel28)
-                            .addComponent(txtMoboModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtMoboModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel29)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel29)
-                .addGap(3, 3, 3)
                 .addComponent(jLabel33)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel30)
@@ -1017,7 +1074,7 @@ public class FirstPage extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)
         );
 
         pack();
@@ -1026,6 +1083,10 @@ public class FirstPage extends javax.swing.JFrame {
     private void btnConfirmDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmDDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnConfirmDDActionPerformed
+
+    private void btnCleanUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanUpActionPerformed
+            new Thread(() -> runCleanup()).start();
+    }//GEN-LAST:event_btnCleanUpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1054,6 +1115,7 @@ public class FirstPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Terminal;
+    private javax.swing.JButton btnCleanUp;
     private javax.swing.JButton btnConfirmDD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
