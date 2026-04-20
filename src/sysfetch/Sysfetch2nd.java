@@ -130,6 +130,12 @@ public class Sysfetch2nd extends javax.swing.JFrame {
         btnSearch = new javax.swing.JButton();
         btnPrevDir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnCreateDir = new javax.swing.JButton();
+        btnCreateFile = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnRename = new javax.swing.JButton();
+        btnProcesses = new javax.swing.JButton();
+        btnMain = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -181,29 +187,58 @@ public class Sysfetch2nd extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
         jLabel2.setText("Thunar from temu");
 
+        btnCreateDir.setText("CREATE DIRECTORY");
+        btnCreateDir.addActionListener(this::btnCreateDirActionPerformed);
+
+        btnCreateFile.setText("CREATE FILE");
+        btnCreateFile.addActionListener(this::btnCreateFileActionPerformed);
+
+        btnDelete.setText("DELETE");
+        btnDelete.addActionListener(this::btnDeleteActionPerformed);
+
+        btnRename.setText("RENAME");
+        btnRename.addActionListener(this::btnRenameActionPerformed);
+
+        btnProcesses.setText("-->");
+        btnProcesses.addActionListener(this::btnProcessesActionPerformed);
+
+        btnMain.setText("<--");
+        btnMain.addActionListener(this::btnMainActionPerformed);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1012, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnPrevDir, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPATH, javax.swing.GroupLayout.PREFERRED_SIZE, 664, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSearch)
-                        .addContainerGap())))
+                        .addComponent(txtPATH, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(241, 241, 241)
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnSearch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCreateDir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCreateFile)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRename)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnMain)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnProcesses)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,23 +247,29 @@ public class Sysfetch2nd extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPATH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnSearch)
                     .addComponent(btnPrevDir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnSearch)
+                    .addComponent(btnCreateFile)
+                    .addComponent(btnCreateDir)
+                    .addComponent(btnDelete)
+                    .addComponent(btnRename)
+                    .addComponent(btnProcesses)
+                    .addComponent(btnMain))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,6 +341,98 @@ public class Sysfetch2nd extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void btnCreateDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateDirActionPerformed
+        String name = JOptionPane.showInputDialog(this, "Enter folder name");
+        
+        if(name != null && !name.isEmpty()){
+            File folder = new File(currentPath + File.separator + name);
+            
+            if(folder.mkdir()){
+                LoadDir(currentPath);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Failed to create folder");
+            }
+        }
+    }//GEN-LAST:event_btnCreateDirActionPerformed
+
+    private void btnCreateFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateFileActionPerformed
+        String name = JOptionPane.showInputDialog(this, "Enter file name: ");
+        
+        if(name != null & !name.isEmpty()){
+            File file = new File(currentPath + File.separator + name);
+            
+            try{
+                if(file.createNewFile()){
+                    LoadDir(currentPath);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "File already exists");
+                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnCreateFileActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int row = FileBrowser.getSelectedRow();
+        if(row == -1) return;
+        
+        String path = FileBrowser.getValueAt(row, 3).toString();
+        File file = new File(path);
+        
+        int confirm = JOptionPane.showConfirmDialog(
+                this, 
+                "Delete" + file.getName() + "?",
+                "Confirm",
+                JOptionPane.YES_NO_OPTION
+        );
+        
+        if(confirm == JOptionPane.YES_OPTION){
+            if (file.delete()){
+                LoadDir(currentPath);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Delete failed");
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnRenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRenameActionPerformed
+        int row = FileBrowser.getSelectedRow();
+        if(row == -1) return;
+        
+        String oldPath = FileBrowser.getValueAt(row, 3).toString();
+        File oldFile = new File(oldPath);
+        
+        String newName = JOptionPane.showInputDialog(this, "Enter new name: ");
+        
+        if(newName != null && !newName.isEmpty()){
+            File newFile = new File(oldFile.getParent() + File.separator + newName);
+            
+            if (oldFile.renameTo(newFile)){
+                LoadDir(currentPath);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Rename failed");
+            }
+        }
+    }//GEN-LAST:event_btnRenameActionPerformed
+
+    private void btnProcessesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessesActionPerformed
+        Processes NextForm = new Processes();
+        NextForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnProcessesActionPerformed
+
+    private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
+        FirstPage NextForm = new FirstPage();
+        NextForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMainActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -327,7 +460,13 @@ public class Sysfetch2nd extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable FileBrowser;
+    private javax.swing.JButton btnCreateDir;
+    private javax.swing.JButton btnCreateFile;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnMain;
     private javax.swing.JButton btnPrevDir;
+    private javax.swing.JButton btnProcesses;
+    private javax.swing.JButton btnRename;
     private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
