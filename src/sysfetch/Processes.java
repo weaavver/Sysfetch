@@ -206,10 +206,18 @@ public class Processes extends javax.swing.JFrame {
         
         if(confirm != JOptionPane.YES_OPTION) return;
         
+        String cmd = "pkexec kill -9 " + pid;
+        
         try{
-            Runtime.getRuntime().exec(new String[]{
-                "bash", "-c","kill -9" + pid
+            Process p = Runtime.getRuntime().exec(new String[]{
+                "bash", "-c", cmd
             });
+        
+            int exitCode = p.waitFor();
+            if(exitCode != 0){
+                JOptionPane.showConfirmDialog(this, "Permission denied?");
+            }
+            
         }
         catch(Exception e){
             e.printStackTrace();
