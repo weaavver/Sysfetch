@@ -1,6 +1,7 @@
 package sysfetch;
 import java.io.*;
 import java.util.*;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.Timer; //for timer so the table can update automatically
 
@@ -87,6 +88,7 @@ public class Processes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProcesses = new javax.swing.JTable();
         btnPreviousPage = new javax.swing.JButton();
+        btnKillProc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -124,6 +126,12 @@ public class Processes extends javax.swing.JFrame {
         btnPreviousPage.setText("<--");
         btnPreviousPage.addActionListener(this::btnPreviousPageActionPerformed);
 
+        btnKillProc.setBackground(new java.awt.Color(255, 0, 0));
+        btnKillProc.setFont(new java.awt.Font("sansserif", 1, 13)); // NOI18N
+        btnKillProc.setForeground(new java.awt.Color(255, 255, 255));
+        btnKillProc.setText("KILL");
+        btnKillProc.addActionListener(this::btnKillProcActionPerformed);
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
@@ -132,6 +140,8 @@ public class Processes extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnKillProc)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPreviousPage)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
@@ -144,7 +154,8 @@ public class Processes extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(btnPreviousPage))
+                    .addComponent(btnPreviousPage)
+                    .addComponent(btnKillProc))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                 .addContainerGap())
@@ -176,6 +187,36 @@ public class Processes extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnPreviousPageActionPerformed
 
+    private void btnKillProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKillProcActionPerformed
+        int row = tblProcesses.getSelectedRow();
+        
+        if(row == -1){
+            JOptionPane.showMessageDialog(this, "Select a process first");
+            return;
+        }
+        
+        String pid = tblProcesses.getValueAt(row, 0).toString();
+        
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Kill process" + pid + "?",
+            "Confirm KILL",
+            JOptionPane.YES_NO_OPTION
+        );
+        
+        if(confirm != JOptionPane.YES_OPTION) return;
+        
+        try{
+            Runtime.getRuntime().exec(new String[]{
+                "bash", "-c","kill -9" + pid
+            });
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnKillProcActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +243,7 @@ public class Processes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKillProc;
     private javax.swing.JButton btnPreviousPage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
